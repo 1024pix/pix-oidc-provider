@@ -8,9 +8,7 @@ function _prepareProviderData() {
   const issuer = `${protocol}${config.host}:${config.port}`;
   const configuration = {
     claims: {
-      email: ['email'],
-      openid: ['sub'],
-      profile: ['family_name', 'given_name']
+      profile: ['family_name', 'given_name'],
     },
     clients: [
       {
@@ -18,9 +16,10 @@ function _prepareProviderData() {
         client_secret: config.oidc.clientSecret,
         grant_types: ['authorization_code', 'refresh_token'],
         response_types: ['code'],
-        redirect_uris: config.oidc.redirectUris
+        redirect_uris: config.oidc.redirectUris,
       }
     ],
+    conformIdTokenClaims: false,
     features: {
       devInteractions: { enabled: config.isDevEnvironment }
     },
@@ -45,7 +44,7 @@ function _prepareProviderData() {
       </div>
     </body>
     </html>`;
-    },
+    }
   };
 
   return {configuration, issuer};
