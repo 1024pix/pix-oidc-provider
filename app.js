@@ -50,35 +50,17 @@ function _prepareProviderData() {
 
   return {configuration, issuer};
 }
-
+function _handleError (message) {
+  return function _handleGenericError(ctx, error) {
+    logger.warn(message);
+    logger.debug(ctx);
+    logger.error(error);
+  };
+}
 function _addEventListeners(provider) {
-  provider.on('access_token.issued', (token) => {
-    logger.info(`Access token issued : ${JSON.stringify(token)}`);
-  });
-  provider.on('authorization_code.consumed', (code) => {
-    logger.info(`Authorization code consumed : ${JSON.stringify(code)}`);
-  });
-  provider.on('authorization_code.saved', (code) => {
-    logger.info(`Authorization code saved : ${JSON.stringify(code)}`);
-  });
-  provider.on('authorization_code.destroyed', (code) => {
-    logger.info(`Authorization code destroyed : ${JSON.stringify(code)}`);
-  });
-  provider.on('authorization.error', (ctx, error) => {
-    logger.warn('An authorization error occurred');
-    logger.debug(ctx);
-    logger.error(error);
-  });
-  provider.on('grant.error', (ctx, error) => {
-    logger.warn('A grant error occurred');
-    logger.debug(ctx);
-    logger.error(error);
-  });
-  provider.on('server_error', (ctx, error) => {
-    logger.warn('A server error occurred');
-    logger.debug(ctx);
-    logger.error(error);
-  });
+  provider.on('authorization.error', _handleError('An authorization error occurred'));
+  provider.on('grant.error', _handleError('A grant error occurred'));
+  provider.on('server_error', _handleError('A server error occurred'));
 }
 
 const {configuration, issuer} = _prepareProviderData();
