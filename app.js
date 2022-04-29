@@ -8,6 +8,7 @@ function _prepareProviderData() {
   const issuer = `${protocol}${config.host}:${config.port}`;
   const configuration = {
     claims: {
+      openid: ['sub'],
       profile: ['family_name', 'given_name'],
     },
     clients: [
