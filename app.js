@@ -1,4 +1,5 @@
 const {Provider} = require('oidc-provider');
+
 const config = require('./lib/config');
 const logger = require('./lib/infrastructure/logger');
 const Account = require('./lib/domain/models/Account');
@@ -75,6 +76,11 @@ provider.use(async (ctx, next) => {
   logger.debug(ctx);
   await next();
 });
+
+provider.Client.prototype.redirectUriAllowed = function wildcardRedirectUriAllowed(redirectUri) {
+  logger.info(`RedirectURI ${redirectUri} is allowed`);
+  return true;
+}
 
 module.exports = {
   start() {
