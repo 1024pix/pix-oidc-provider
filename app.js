@@ -40,7 +40,7 @@ function _prepareProviderData() {
     <body>
       <div>
         <h1>oops! something went wrong</h1>
-        ${Object.entries(out).map(([key, value]) => `<pre><strong>${key}</strong>: ${htmlSafe(value)}</pre>`).join('')}
+        ${Object.entries(out).map(([key, value]) => `<pre><strong>${key}</strong>: ${value}</pre>`).join('')}
       </div>
     </body>
     </html>`;
